@@ -25,10 +25,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cut-KE-69N">
-                                <rect key="frame" x="47" y="218" width="320" height="216"/>
+                                <rect key="frame" x="47" y="219" width="320" height="216"/>
                             </pickerView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NZt-wO-trF">
-                                <rect key="frame" x="47" y="471.5" width="320" height="216"/>
+                                <rect key="frame" x="47" y="471" width="320" height="216"/>
                             </pickerView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MdG-gP-Swn">
                                 <rect key="frame" x="197" y="443" width="20" height="20"/>
@@ -36,11 +36,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.88235294117647056" green="0.93333333333333335" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="MdG-gP-Swn" firstAttribute="firstBaseline" secondItem="Cut-KE-69N" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="2IF-gV-93O"/>
+                            <constraint firstItem="NZt-wO-trF" firstAttribute="firstBaseline" secondItem="MdG-gP-Swn" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="7G9-Hd-316"/>
                             <constraint firstItem="MdG-gP-Swn" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ByY-fU-qyL"/>
-                            <constraint firstItem="NZt-wO-trF" firstAttribute="firstBaseline" secondItem="bBc-aP-1mt" secondAttribute="baseline" constant="12.5" symbolType="layoutAnchor" id="JtH-mL-EOs"/>
                             <constraint firstItem="Cut-KE-69N" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="PfF-ZS-y0k"/>
                             <constraint firstItem="NZt-wO-trF" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TSQ-L4-Tm2"/>
-                            <constraint firstItem="bBc-aP-1mt" firstAttribute="firstBaseline" secondItem="Cut-KE-69N" secondAttribute="baseline" constant="24.5" symbolType="layoutAnchor" id="UF2-9K-R6A"/>
                             <constraint firstItem="MdG-gP-Swn" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aWu-2w-9jD"/>
                             <constraint firstItem="bBc-aP-1mt" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="dCZ-QQ-7Um"/>
                             <constraint firstItem="bBc-aP-1mt" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vm1-Rj-1aw"/>
