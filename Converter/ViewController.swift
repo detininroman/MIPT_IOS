@@ -15,7 +15,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var pickerTo: UIPickerView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    let currencies = ["RUB", "USD", "EUR"]
+    var currencies = ["RUB", "USD", "EUR"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +92,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             if let parsedJSON = json {
                 print("\(parsedJSON)")
                 if let rates = parsedJSON["rates"] as? Dictionary<String, Double> {
+                    for (key, _) in rates {
+                        if !currencies.contains(key) {
+                            currencies.append(key)
+                        }
+                    }
                     if let rate = rates[toCurrency] {
                         value = "\(rate)"
                         } else {
