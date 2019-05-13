@@ -19,7 +19,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.label.text = "test"
         
         self.pickerTo.dataSource = self
         self.pickerFrom.dataSource = self
@@ -27,13 +26,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.pickerTo.delegate = self
         self.pickerFrom.delegate = self
         
-        self.requestCurrencyRates(baseCurrency: "RUB") { (data, error) in }
-        
-        self.retrieveCurrencyRate(baseCurrency: "USD", toCurrency: "RUB") { [weak self] (value) in DispatchQueue.main.async(execute: {
-            if let strongSelf = self {
-                strongSelf.label.text = value
-            }
-        })}
+        self.activityIndicator.hidesWhenStopped = true
+        self.requestCurrentCurrencyRate()
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -41,15 +35,46 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == pickerTo {
+            return self.currenciesExceptBase().count
+        }
         return currencies.count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == pickerTo {
+            return self.currenciesExceptBase()[row]
+        }
         return currencies[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == pickerFrom {
+            self.pickerTo.reloadAllComponents()
+        }
+        
+        self.requestCurrentCurrencyRate()
+    }
+    
+    func requestCurrentCurrencyRate() {
+        self.activityIndicator.startAnimating()
+        self.label.text = ""
+        let baseCurrencyIndex = self.pickerFrom.selectedRow(inComponent: 0)
+        let toCurrencyIndex = self.pickerTo.selectedRow(inComponent: 0)
+        
+        let baseCurrency = self.currencies[baseCurrencyIndex]
+        let toCurrency = self.currenciesExceptBase()[toCurrencyIndex]
+        
+        self.retrieveCurrencyRate(baseCurrency: baseCurrency, toCurrency: toCurrency) { [weak self] (value) in DispatchQueue.main.async(execute: {
+            if let strongSelf = self {
+                strongSelf.label.text = value
+                strongSelf.activityIndicator.stopAnimating()
+            }
+        })}
+    }
+    
     func requestCurrencyRates(baseCurrency: String, parseHandler: @escaping (Data?, Error?) -> Void) {
-        let url = URL(string: "http://data.fixer.io/api/latest?access_key=1d03581943cbf9c16822d4cf42ac821a&format=1")!
+        let url = URL(string: "https://api.exchangeratesapi.io/latest?base=" + baseCurrency)!
         
         let dataTask = URLSession.shared.dataTask(with: url) {
             (dataRecieved, response, error) in parseHandler(dataRecieved, error)
@@ -98,6 +123,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
             completion(string)
             }
+    }
+    
+    func currenciesExceptBase() -> [String] {
+        var currenciesExceptBase = currencies
+        currenciesExceptBase.remove(at: pickerFrom.selectedRow(inComponent: 0))
+        
+        return currenciesExceptBase
     }
     
     
