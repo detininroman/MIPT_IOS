@@ -51,6 +51,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == pickerFrom {
             self.pickerTo.reloadAllComponents()
+            self.pickerFrom.reloadAllComponents()
         }
         
         self.requestCurrentCurrencyRate()
